@@ -16,7 +16,7 @@
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <div class="jumbotron" style="border: 2px;">
-                        <form id="registerForm" class="needs-validation"  novalidate>
+                        <form id="registerForm" class="needs-validation" novalidate>
                             <div class="row form-group">
                                 <div class="col-sm-6">
                                    <input type="text" placeholder="First Name" id="fname_id" name="fname" class="form-control" required>
@@ -32,12 +32,10 @@
                                 <input type="password" placeholder="Password" id="password_id" name="password" class="form-control" required>
                             </div>
                             <div class="form-group">
-                               <div class="">
                                  <div class="custom-file">
-                                    <input type="file" id="image_id" name="image" class="custom-file-input">
+                                    <input type="file" id="image_id" name="image" class="custom-file-input" required>
                                     <label class="custom-file-label" for="customFile">Upload Picture</label>
                                  </div>
-                               </div>
                             </div>
                             <div class="text-center">
                                <button class="btn btn-success">Register</button>
@@ -52,10 +50,7 @@
 
 
         </div>
-
-
-
-
+        
     </body>
     <jsp:include page="generalFooterImports.jsp"></jsp:include>
     <script>
@@ -63,6 +58,27 @@
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
      });
+    
+    function postFilesData(data) {
+        $.ajax({
+            url :  'RegisterServlet',
+            type : 'POST',
+            data : data,
+            cache : false,
+            dataType : 'json',
+            processData : false,
+            contentType : false,
+            /*    
+            success : function(data, textStatus, jqXHR) {
+                alert(data);
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                alert('ERRORS: ' + textStatus);
+            }
+            */
+            
+        });
+    }
     
     (function () {
         window.addEventListener('load', function () {
@@ -81,25 +97,13 @@
 						let email = $('#email_id').val();
 						let password = $('#password_id').val();
 						let image = $('#image_id').val();
-						$.ajax({
-					        type: "POST",
-					        enctype: 'multipart/form-data',
-					        processData: false, // important
-					        contentType: false, // important
-					        url: "RegisterServlet",
-					        data: {
-					        	{
-					        	fname : fn,
-								lname : ln,
-								email : email,
-								password : password,
-								image : image
-					        	}
-					        },
-					        success: function(result) {
-					            alert(result);
-					        }
-					    });
+
+					    //var xdata = {fname : fn,lname : ln,email : email,password : password,image : image};
+					    
+					    var x = document.getElementById('registerForm');
+                        var data = new FormData(x);
+					    postFilesData(data)
+						
 						/*
 						$.post("RegisterServlet", {
 							fname : fn,
@@ -110,7 +114,8 @@
 						}, function(data) {
 							alert(data);
 						});
-						*/
+                        */
+						
                         document.getElementById("registerForm").reset(); 
                         document.getElementById('registerForm').classList.remove("was-validated");
 

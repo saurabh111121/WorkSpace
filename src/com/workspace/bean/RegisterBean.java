@@ -1,10 +1,14 @@
 package com.workspace.bean;
 
+import java.io.InputStream;
+
+
 public class RegisterBean {
 	    private String firstName; 
 		private String lastName;
 		private String email;
 		private String password;
+		private InputStream image;
 		
 		public String getFirstName() {
 			return firstName;
@@ -30,6 +34,14 @@ public class RegisterBean {
 		public void setPassword(String password) {
 			this.password = password;
 		}
+		public InputStream getImage() {
+			return image;
+		}
+		public void setImage(InputStream image) {
+			this.image = image;
+		}
+		
+		
 		
 		
 }

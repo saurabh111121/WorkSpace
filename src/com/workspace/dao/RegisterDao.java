@@ -11,7 +11,7 @@ public class RegisterDao {
 
 	public Boolean Insert(RegisterBean data) {
 		Connection con = null;
-	    String sql = "INSERT into register (firstName,lastName,email,password) Values(?,?,?,?) ";
+	    String sql = "INSERT into register (firstName,lastName,email,password,image) Values(?,?,?,?,?) ";
 	    int count; 
 	    try {
 	    	  con = new DBConnection().getConnection();
@@ -20,7 +20,9 @@ public class RegisterDao {
 	    	  ps.setString(2, data.getLastName());
 	    	  ps.setString(3, data.getEmail());
 	    	  ps.setString(4, data.getPassword());
-	    	  
+	    	  if(data.getImage() != null) {
+	    	     ps.setBlob(5, data.getImage());
+	    	  }
 	    	  count = ps.executeUpdate();
 	    	  if(count > 0) {
 	    		 return true;

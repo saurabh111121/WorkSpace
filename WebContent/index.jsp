@@ -16,7 +16,7 @@
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <div class="jumbotron" style="border: 2px;">
-                        <form action="" id="registerForm" class="needs-validation" novalidate>
+                        <form method="POST" action="RegisterServlet"  id="registerForm" class="needs-validation" enctype='multipart/form-data' novalidate>
                             <div class="row form-group">
                                 <div class="col-sm-6">
                                    <input type="text" placeholder="First Name" id="fname_id" name="fname" class="form-control" required>
@@ -29,13 +29,13 @@
                                 <input type="email" placeholder="Email" id="email_id" name="email" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" placeholder="Password" id="password_id" name="passowrd" class="form-control" required>
+                                <input type="password" placeholder="Password" id="password_id" name="password" class="form-control" required>
                             </div>
                             <div class="form-group">
                                <div class="">
                                  <div class="custom-file">
                                     <input type="file" id="image_id" name="image" class="custom-file-input">
-                                    <label class="custom-file-label" for="customFile">Upload Picture(Optional)</label>
+                                    <label class="custom-file-label" for="customFile">Upload Picture</label>
                                  </div>
                                </div>
                             </div>
@@ -59,6 +59,11 @@
     </body>
     <jsp:include page="generalFooterImports.jsp"></jsp:include>
     <script>
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+     });
+    /*
     (function () {
         window.addEventListener('load', function () {
             var forms = document.getElementsByClassName('needs-validation');
@@ -75,11 +80,13 @@
 						let ln = $('#lname_id').val();
 						let email = $('#email_id').val();
 						let password = $('#password_id').val();
+						let image = $('#image_id').val();
 						$.post("RegisterServlet", {
 							fname : fn,
 							lname : ln,
 							email : email,
-							password : password
+							password : password,
+							image : image
 						}, function(data) {
 							alert(data);
 						});
@@ -93,6 +100,7 @@
             });   //end of function(form)
         }, false); //end of  window.addEventListener('load', function () 
     })();  // end of funtion()
+    */
     </script>
 
     </html>

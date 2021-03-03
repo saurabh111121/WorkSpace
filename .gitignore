@@ -1,6 +1,9 @@
 # html files
 test.html
 
+# Java Files
+DBConnection.java
+
 # Compiled class file
 *.class
 

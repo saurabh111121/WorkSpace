@@ -16,7 +16,7 @@
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
                     <div class="jumbotron" style="border: 2px;">
-                        <form method="POST" action="RegisterServlet"  id="registerForm" class="needs-validation" enctype='multipart/form-data' novalidate>
+                        <form id="registerForm" class="needs-validation"  novalidate>
                             <div class="row form-group">
                                 <div class="col-sm-6">
                                    <input type="text" placeholder="First Name" id="fname_id" name="fname" class="form-control" required>
@@ -63,7 +63,7 @@
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
      });
-    /*
+    
     (function () {
         window.addEventListener('load', function () {
             var forms = document.getElementsByClassName('needs-validation');
@@ -81,6 +81,26 @@
 						let email = $('#email_id').val();
 						let password = $('#password_id').val();
 						let image = $('#image_id').val();
+						$.ajax({
+					        type: "POST",
+					        enctype: 'multipart/form-data',
+					        processData: false, // important
+					        contentType: false, // important
+					        url: "RegisterServlet",
+					        data: {
+					        	{
+					        	fname : fn,
+								lname : ln,
+								email : email,
+								password : password,
+								image : image
+					        	}
+					        },
+					        success: function(result) {
+					            alert(result);
+					        }
+					    });
+						/*
 						$.post("RegisterServlet", {
 							fname : fn,
 							lname : ln,
@@ -90,7 +110,7 @@
 						}, function(data) {
 							alert(data);
 						});
-                        //document.forms[0].reset();
+						*/
                         document.getElementById("registerForm").reset(); 
                         document.getElementById('registerForm').classList.remove("was-validated");
 
@@ -100,7 +120,7 @@
             });   //end of function(form)
         }, false); //end of  window.addEventListener('load', function () 
     })();  // end of funtion()
-    */
+    
     </script>
 
     </html>

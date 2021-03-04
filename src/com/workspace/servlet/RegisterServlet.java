@@ -2,8 +2,10 @@ package com.workspace.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +23,14 @@ public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	String jsonData = null;
+		try {
+			jsonData = new RegisterDao().fetchData();
+			response.getWriter().write(jsonData);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	
 	}
 

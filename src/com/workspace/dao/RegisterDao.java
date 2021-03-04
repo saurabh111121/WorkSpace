@@ -2,7 +2,10 @@ package com.workspace.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.workspace.bean.RegisterBean;
 import com.workspace.db.DBConnection;
@@ -34,5 +37,40 @@ public class RegisterDao {
 	      }
 		return false;
 	}
+	
+	
+	public String fetchData() throws SQLException {
+		ArrayList<String> list = new ArrayList<String>();
+		StringBuilder Data;
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sbsuffix = new StringBuilder();
+		sbsuffix = sbsuffix.append("}");
+		sb = sb.append("{" + "\"data\"" + ":");
+		String sql = "Select * from register";
+	    Connection con;
+		try {
+			 con = new DBConnection().getConnection();
+			 Statement st = con.createStatement();	
+		     ResultSet rs = st.executeQuery(sql);
+		     while(rs.next()) {
+		            list.add(                			
+		           "[" 	 
+		            +"\""+rs.getString("firstName") +"\""+","											
+		        	+"\""+rs.getString("lastName") +"\""+"," 
+		        	+"\""+rs.getString("email") +"\""+"," 
+		        	+"\""+rs.getString("password") +"\""+"," 
+		        	+"\""+rs.getBlob("image") +"\""
+		        	+"]");
+		          }
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			con = null;
+		}
+		Data = sb.append(list).append(sbsuffix);
+		
+		return Data.toString();	
+	}  
 
+   
 }

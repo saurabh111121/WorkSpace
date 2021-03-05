@@ -61,6 +61,8 @@
                 </div>
                 <div class="col-sm-2"></div>
             </div>
+            
+         
 
 
         </div>
@@ -148,10 +150,6 @@
 
 			$('#displayTable').DataTable({
 				data : dataSet,
-				"searching" : false,
-				"bPaginate" : false,
-				"bFilter" : false,
-				"bInfo" : false,
 				columns : [ {
 					title : "Fist Name"
 				}, {
@@ -167,8 +165,8 @@
                     "targets": -1,
                     "data": null,
                     "mRender": function (data, type, full) {
-                        return '<img src=" '+ data[4] + ' " >';
-                    }
+                        return ' <img src="./ImageDownloader?email='+data[2]+'" height="100" width="100" >';
+                    }  
                 }]
 			
 			});

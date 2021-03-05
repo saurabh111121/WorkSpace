@@ -11,14 +11,16 @@ import com.workspace.bean.RegisterBean;
 import com.workspace.db.DBConnection;
 
 public class RegisterDao {
-
+	Connection con = null;
+	PreparedStatement ps = null;  
+	ResultSet rs = null;
 	public Boolean Insert(RegisterBean data) {
-		Connection con = null;
+		
 	    String sql = "INSERT into register (firstName,lastName,email,password,image) Values(?,?,?,?,?) ";
 	    int count; 
 	    try {
 	    	  con = new DBConnection().getConnection();
-	    	  PreparedStatement ps = con.prepareStatement(sql);
+	    	  ps = con.prepareStatement(sql);
 	    	  ps.setString(1, data.getFirstName());
 	    	  ps.setString(2, data.getLastName());
 	    	  ps.setString(3, data.getEmail());
@@ -38,7 +40,7 @@ public class RegisterDao {
 		return false;
 	}
 	
-	
+
 	public String fetchData() throws SQLException {
 		ArrayList<String> list = new ArrayList<String>();
 		StringBuilder Data;
@@ -47,19 +49,18 @@ public class RegisterDao {
 		sbsuffix = sbsuffix.append("}");
 		sb = sb.append("{" + "\"data\"" + ":");
 		String sql = "Select * from register";
-	    Connection con;
+	    
 		try {
 			 con = new DBConnection().getConnection();
 			 Statement st = con.createStatement();	
-		     ResultSet rs = st.executeQuery(sql);
+		      rs = st.executeQuery(sql);
 		     while(rs.next()) {
 		            list.add(                			
 		           "[" 	 
 		            +"\""+rs.getString("firstName") +"\""+","											
 		        	+"\""+rs.getString("lastName") +"\""+"," 
 		        	+"\""+rs.getString("email") +"\""+"," 
-		        	+"\""+rs.getString("password") +"\""+"," 
-		        	+"\""+rs.getBlob("image") +"\""
+		        	+"\""+rs.getString("password") +"\""
 		        	+"]");
 		          }
 		}catch(Exception e) {
@@ -71,6 +72,22 @@ public class RegisterDao {
 		
 		return Data.toString();	
 	}  
-
+	
+	public byte[] getImage(String email) {
+		byte[] image = null;
+		try {
+		con  = new DBConnection().getConnection();
+		ps = con.prepareStatement("select image from register where email= ? ");
+		ps.setString(1, email);
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			image = rs.getBytes("image");
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return image;
+	}
+     
    
 }

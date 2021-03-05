@@ -14,18 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-8">
-                   <div class="container">
-                      <div class="">
-                         <button class="btn btn-info" id="btnDisplay">Display Register User</button>
-                       </div>
-                       <br/>
-                      <div class="">
-                          <table id="displayTable" class="display table-responsive-md table-bordered" style="width:100%">
-                           
-			         	  </table> 
-                      </div>
-                  </div>
-                
+                  
                 
                 </div>
                 <div class="col-sm-4">
@@ -142,37 +131,8 @@
         }, false); //end of  window.addEventListener('load', function () 
     })();  // end of funtion()
     
-    $('#btnDisplay').click(function() {
-		$.get("RegisterServlet", function(data) {
-			//alert(data);
-			var dataSet = JSON.parse(data);
-			dataSet = dataSet.data;
+    
 
-			$('#displayTable').DataTable({
-				data : dataSet,
-				columns : [ {
-					title : "Fist Name"
-				}, {
-					title : "Last Name"
-				}, {
-					title : "Email"
-				}, {
-					title : "Password"
-				},{
-					title : "Image"
-				} ],
-				"columnDefs": [{
-                    "targets": -1,
-                    "data": null,
-                    "mRender": function (data, type, full) {
-                        return ' <img src="./ImageDownloader?email='+data[2]+'" height="100" width="100" >';
-                    }  
-                }]
-			
-			});
-
-		});
-	});
     
     </script>
 

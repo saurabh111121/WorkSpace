@@ -72,22 +72,6 @@ public class RegisterDao {
 		
 		return Data.toString();	
 	}  
-	
-	public byte[] getImage(String email) {
-		byte[] image = null;
-		try {
-		con  = new DBConnection().getConnection();
-		ps = con.prepareStatement("select image from register where email= ? ");
-		ps.setString(1, email);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			image = rs.getBytes("image");
-		}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return image;
-	}
-     
+
    
 }
